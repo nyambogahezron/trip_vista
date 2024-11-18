@@ -1,9 +1,8 @@
 import Colors from '@/constants/Colors';
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { View } from 'react-native';
 
-const TabLayout = () => {
+export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
@@ -15,6 +14,7 @@ const TabLayout = () => {
           borderTopWidth: 0,
           paddingBottom: 10,
           paddingTop: 10,
+          shadowColor: 'transparent',
         },
       }}
     >
@@ -34,7 +34,7 @@ const TabLayout = () => {
           title: 'Categories',
           tabBarIcon: ({ color }) => (
             <MaterialIcons size={28} name='space-dashboard' color={color} />
-          )
+          ),
         }}
       />
       <Tabs.Screen
@@ -42,22 +42,12 @@ const TabLayout = () => {
         options={{
           title: 'Search',
           tabBarIcon: ({ color }) => (
-            <View
-              style={{
-                backgroundColor: Colors.primaryColor,
-                paddingHorizontal: 16,
-                paddingVertical: 12,
-                borderRadius: 50,
-                height: 45,
-              }}
-            >
-              <Ionicons
-                size={24}
-                name='search-outline'
-                color='#000'
-                className='font-pblack text-black'
-              />
-            </View>
+            <Ionicons
+              size={24}
+              name='search-outline'
+              color='#000'
+              className='font-pblack text-black'
+            />
           ),
         }}
       />
@@ -81,6 +71,4 @@ const TabLayout = () => {
       />
     </Tabs>
   );
-};
-
-export default TabLayout;
+}

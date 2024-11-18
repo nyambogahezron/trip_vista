@@ -15,6 +15,8 @@ import Listings from '@/components/Listings';
 import TravelGroups from '@/components/TravelGroups';
 import SearchInput from '@/components/SearchInput';
 import LoadingScreen from '@/components/LoadingScreen';
+import Animated from 'react-native-reanimated';
+import TopRatedList from '@/components/TopLatedList';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -23,18 +25,40 @@ const HomePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  async function onRefresh() {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      return () => clearTimeout(timer);
+    }, 1000);
+  }
+  const data = [
+    {
+      key: 'topRated',
+      component: <TopRatedList selectedCategory={selectedCategory} />,
+    },
+    {
+      key: 'list',
+      component: <Listings selectedCategory={selectedCategory} />,
+    },
+  ];
 
   return (
     <SafeAreaView className='bg-bgColor flex-1'>
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <FlatList
-          showsHorizontalScrollIndicator={false}
+        <Animated.FlatList
+          refreshing={false}
+          onRefresh={onRefresh}
+          data={data}
+          keyExtractor={(item) => item.key}
+          renderItem={({ item }) => <View>{item.component}</View>}
           showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           ListHeaderComponent={() => (
             <>
               <View className='flex flex-row items-center justify-between py-2 px-4'>
@@ -48,7 +72,7 @@ const HomePage = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  onPress={() => router.push('/notifications')}
+                  onPress={() => router.push('/')}
                   style={{
                     backgroundColor: '#fff',
                     padding: 10,
@@ -81,13 +105,13 @@ const HomePage = () => {
                   selectedCategory={selectedCategory}
                 />
                 <View>
-                  <Listings selectedCategory={selectedCategory} />
+                  {/* <Listings selectedCategory={selectedCategory} /> */}
                 </View>
               </View>
             </>
           )}
           ListFooterComponent={() => (
-            <View className=''>
+            <View>
               <TravelGroups />
             </View>
           )}

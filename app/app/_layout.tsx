@@ -1,13 +1,11 @@
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import 'react-native-reanimated';
-import 'react-native-gesture-handler';
-SplashScreen.preventAutoHideAsync(); //prevent splash screen from auto hiding till fonts are loaded
+import './global.css';
+
+SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  // load fonts
-
   const [fontsLoaded, error] = useFonts({
     'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
     'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
@@ -22,11 +20,9 @@ const RootLayout = () => {
     'Roboto-Regular': require('../assets/fonts/Roboto-Regular.ttf'),
   });
 
-  // check if fonts are loaded
-
   useEffect(() => {
     if (error) throw new Error('Fonts not loaded');
-    if (fontsLoaded) SplashScreen.hideAsync(); //hide splash screen
+    if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded, error]);
 
   if (!fontsLoaded) return null;
@@ -34,8 +30,6 @@ const RootLayout = () => {
 
   return (
     <Stack>
-      <Stack.Screen name='index' options={{ headerShown: false }} />
-      <Stack.Screen name='(auth)' options={{ headerShown: false }} />
       <Stack.Screen
         name='(tabs)'
         options={{
@@ -45,6 +39,7 @@ const RootLayout = () => {
           },
         }}
       />
+      <Stack.Screen name='(auth)' options={{ headerShown: false }} />
     </Stack>
   );
 };

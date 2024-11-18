@@ -2,7 +2,8 @@ import { View, Text, FlatList, Image } from 'react-native';
 import listingsData from '../data/listingsData';
 import Listing from './Listing';
 import { useEffect, useState } from 'react';
-const Listings = ({ selectedCategory }) => {
+
+const TopRatedList = ({ selectedCategory }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const Listings = ({ selectedCategory }) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        horizontal
         data={data ?? []}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -56,4 +58,4 @@ const Listings = ({ selectedCategory }) => {
     </View>
   );
 };
-export default Listings;
+export default TopRatedList;
