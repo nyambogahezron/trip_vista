@@ -20,7 +20,7 @@ import { useGlobalContext } from '@/context/GlobalContext';
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [isLoading, setLoading] = useState<boolean>(true);
-  const {listingsData} = useGlobalContext();
+  const { listingsData } = useGlobalContext();
 
   useEffect(() => {
     const timer = setTimeout(() => {
