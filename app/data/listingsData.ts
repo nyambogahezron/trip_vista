@@ -1,4 +1,6 @@
-const listingsData = [
+import { ListingProps } from '@/types';
+
+const listingsData: ListingProps[] = [
   {
     id: 1,
     name: 'Beach Item 1',

@@ -1,12 +1,13 @@
 import Colors from '@/constants/Colors';
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarInactiveTintColor: Colors.black,
         tabBarActiveTintColor: '#ff7f36',
         tabBarStyle: {
@@ -15,6 +16,12 @@ export default function TabLayout() {
           paddingBottom: 10,
           paddingTop: 10,
           shadowColor: 'transparent',
+          flexDirection: Platform.select({web: 'column', }),
+          width: 200,
+          height: '100%',
+          position: 'fixed',
+          left: 0,
+          top: 0,
         },
       }}
     >

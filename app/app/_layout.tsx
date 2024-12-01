@@ -1,11 +1,12 @@
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
+import GlobalContextProvider from '@/context/GlobalContext';
 import './global.css';
 
 SplashScreen.preventAutoHideAsync();
 
-const RootLayout = () => {
+const MainLayout = () => {
   const [fontsLoaded, error] = useFonts({
     'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
     'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
@@ -43,4 +44,11 @@ const RootLayout = () => {
     </Stack>
   );
 };
-export default RootLayout;
+
+export default function RootLayout() {
+  return (
+    <GlobalContextProvider>
+      <MainLayout />
+    </GlobalContextProvider>
+  );
+}

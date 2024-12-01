@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
-  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CategoriesButtons from '@/components/CategoriesButtons';
@@ -16,11 +15,12 @@ import TravelGroups from '@/components/TravelGroups';
 import SearchInput from '@/components/SearchInput';
 import LoadingScreen from '@/components/LoadingScreen';
 import Animated from 'react-native-reanimated';
-import TopRatedList from '@/components/TopLatedList';
+import { useGlobalContext } from '@/context/GlobalContext';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [isLoading, setLoading] = useState<boolean>(true);
+  const {listingsData} = useGlobalContext();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,11 +38,20 @@ const HomePage = () => {
   const data = [
     {
       key: 'topRated',
-      component: <TopRatedList selectedCategory={selectedCategory} />,
+      component: (
+        <Listings selectedCategory={selectedCategory} horizontal={true} />
+      ),
     },
     {
       key: 'list',
-      component: <Listings selectedCategory={selectedCategory} />,
+      component: (
+        <Listings
+          selectedCategory={selectedCategory}
+          horizontal={false}
+          customCardStyle='w-full right-1'
+          customImageStyle='w-full'
+        />
+      ),
     },
   ];
 
