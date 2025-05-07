@@ -6,7 +6,7 @@ import { useGlobalContext } from '@/context/GlobalContext';
 import CategoriesButtons from './CategoriesButtons';
 import ListingCard from './ListingCard';
 
-export default function ListingsItems({ ref }: { ref: any }) {
+export default function ListingsItems() {
 	const [selectedCategory, setSelectedCategory] = useState<string>('All');
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const { listingsData } = useGlobalContext();
@@ -24,7 +24,6 @@ export default function ListingsItems({ ref }: { ref: any }) {
 				<LoadingScreen />
 			) : (
 				<Animated.FlatList
-					ref={ref}
 					refreshing={false}
 					data={listingsData}
 					keyExtractor={(item) => item.id}

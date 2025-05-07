@@ -1,17 +1,24 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	StyleProp,
+	ViewStyle,
+} from 'react-native';
 import { useState, useEffect, useRef } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useGlobalContext } from '@/context/GlobalContext';
 import { ListingProps } from '@/types';
-
+import Animated from 'react-native-reanimated';
 interface Props {
 	setSelectedCategory: (category: string) => void;
 	selectedCategory: string;
+	customStyle?: StyleProp<ViewStyle>;
 }
 
 export default function CategoriesButtons({
 	setSelectedCategory,
 	selectedCategory,
+	customStyle,
 }: Props) {
 	const itemRefs = useRef<(any | null)[]>([]);
 	const { listingsData } = useGlobalContext();
@@ -22,7 +29,6 @@ export default function CategoriesButtons({
 	};
 
 	//get custom categories form listings
-
 	const getDistinctCategories = () => {
 		const categories = listingsData.map((item: ListingProps) => item.category);
 		const uniqueCategories = Array.from(new Set(categories));
@@ -34,8 +40,8 @@ export default function CategoriesButtons({
 	}, [listingsData]);
 
 	return (
-		<View className='fixed top-0 left-0 right-0 z-10'>
-			<ScrollView
+		<View style={customStyle} className='fixed top-0 left-0 right-0 z-10'>
+			<Animated.ScrollView
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				className='flex-row py-4 bg-bgColor '
@@ -65,7 +71,7 @@ export default function CategoriesButtons({
 							</TouchableOpacity>
 						))}
 				</View>
-			</ScrollView>
+			</Animated.ScrollView>
 		</View>
 	);
 }

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import LoadingScreen from '@/components/LoadingScreen';
-import Animated from 'react-native-reanimated';
 import { useGlobalContext } from '@/context/GlobalContext';
 import ListingCard from './ListingCard';
+import { AnimatedFlashList } from '@shopify/flash-list';
 
 export default function TopRated() {
 	const [isLoading, setLoading] = useState<boolean>(true);
@@ -33,7 +33,7 @@ export default function TopRated() {
 			{isLoading ? (
 				<LoadingScreen />
 			) : (
-				<Animated.FlatList
+				<AnimatedFlashList
 					horizontal
 					refreshing={false}
 					onRefresh={onRefresh}

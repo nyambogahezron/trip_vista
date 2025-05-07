@@ -4,20 +4,13 @@ import { View, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TravelGroups from '@/components/TravelGroups';
 import SearchInput from '@/components/SearchInput';
-import Animated, {
-	useSharedValue,
-	useAnimatedScrollHandler,
-	useAnimatedStyle,
-} from 'react-native-reanimated';
 import TopRated from '@/components/TopRated';
 import ListingsItems from '@/components/ListingsItems';
 import CategoriesButtons from '@/components/CategoriesButtons';
-
+import { AnimatedFlashList } from '@shopify/flash-list';
 const HomePage = () => {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [showCategories, setShowCategories] = useState<boolean>(false);
-	const listingsRef = useRef(null);
-	const scrollY = useSharedValue(0);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -25,16 +18,6 @@ const HomePage = () => {
 		}, 1000);
 		return () => clearTimeout(timer);
 	}, []);
-
-	const scrollHandler = useAnimatedScrollHandler((event) => {
-		scrollY.value = event.contentOffset.y;
-	});
-
-	const headerStyle = useAnimatedStyle(() => {
-		return {
-			transform: [{ translateY: scrollY.value > 0 ? 0 : -100 }],
-		};
-	});
 
 	async function onRefresh() {
 		const timer = setTimeout(() => {
@@ -50,7 +33,7 @@ const HomePage = () => {
 		},
 		{
 			key: 'list',
-			component: <ListingsItems ref={listingsRef} />,
+			component: <ListingsItems />,
 		},
 	];
 
@@ -89,10 +72,9 @@ const HomePage = () => {
 				}}
 			/>
 
-			<Animated.FlatList
+			<AnimatedFlashList
 				refreshing={false}
 				onRefresh={onRefresh}
-				onScroll={scrollHandler}
 				data={data}
 				keyExtractor={(item) => item.key}
 				renderItem={({ item }) => <View>{item.component}</View>}
